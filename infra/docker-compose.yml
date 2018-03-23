@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mariadb:
+    restart: always
+    build: ./mariadb/
+    volumes:
+      - ./mariadb/db:/var/lib/mysql
+      - ./mariadb/conf.d:/etc/mysql/conf.d
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: my_app
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: my_app
+      TZ: "Asia/Tokyo"
+  web:
+    build: ./nginx/
+    ports:
+      - "8888:80"
+      - "4433:443"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ../html:/var/www/html
+  app:
+    build: ./phpfpm/
+    volumes: 
+      - ../html:/var/www/html
+    environment:
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+
+
