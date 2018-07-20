@@ -1,4 +1,5 @@
-FROM php:7.0.28-fpm-alpine
+FROM php:7.2.7-fpm-alpine
+# FROM php:7.0.28-fpm-alpine
 ENV TIMEZONE            Asia/Tokyo
 ENV PHP_MEMORY_LIMIT    64M
 ENV MAX_UPLOAD          16M
