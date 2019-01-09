@@ -3,6 +3,8 @@ services:
   mariadb:
     restart: always
     build: ./mariadb/
+    ports:
+      - "33306:3306"
     volumes:
       - ./mariadb/db:/var/lib/mysql
       - ./mariadb/conf.d:/etc/mysql/conf.d
