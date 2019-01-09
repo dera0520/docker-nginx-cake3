@@ -1,11 +1,13 @@
 version: '3'
 services:
-  mariadb:
+  mysql:
     restart: always
-    build: ./mariadb/
+    build: mysql/
+    ports:
+      - "33306:3306"
     volumes:
-      - ./mariadb/db:/var/lib/mysql
-      - ./mariadb/conf.d:/etc/mysql/conf.d
+      - ./mysql/db:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: my_app
@@ -30,8 +32,8 @@ services:
     environment:
       TZ: "Asia/Tokyo"
     depends_on:
-      - mariadb
+      - mysql
     links:
-      - mariadb
+      - mysql
 
 
